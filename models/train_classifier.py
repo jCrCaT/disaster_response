@@ -93,6 +93,15 @@ def build_model():
     return pipeline
 
 def improve_model(X_train,y_train,pipeline):
+    '''
+        DEF: Function that improves the model searching for the best parameters through GridSearchCV
+        INPUT:
+            X_train: Features to be trained
+            y_train: Y variable
+            pipeline: Pipeline with model to be improved.
+        OUTPUT:
+            pipeline: Pipeline with improved model
+    '''
 
     #Define the parameter grid to start GridSearchCV
     parameters = {
