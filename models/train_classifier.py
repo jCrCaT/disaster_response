@@ -76,6 +76,9 @@ def build_model():
         INPUT: None
         OUTPUT: pipeline: The pipeline that contains the transformation of data (tokenize, tfidf) and the definition of model (RandomForestRegressor)
     '''
+    #Define the classifier
+    rfc = RandomForestClassifier()
+
     #Define the Pipeline
     pipeline = Pipeline([
     ('features', FeatureUnion([
@@ -84,8 +87,33 @@ def build_model():
             ('tfidf', TfidfTransformer())            
         ]))
     ])),
-    ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators=20)))]
+    ('clf', MultiOutputClassifier(rfc))]
     )
+
+    #Define the parameter grid to start GridSearchCV
+    parameters = {
+    'clf__estimator__n_estimators':[15,20]
+    }
+    #Define GridSearchCV
+    cv = GridSearchCV(pipeline,param_grid=parameters)
+
+    #Train the GSCV
+    cv.fit(X_train,y_train)
+
+    #Setting RandomForestClassifier with best parameters
+    rfc = RandomForestClassifier(n_estimators=cv.best_params_['clf__estimator__n_estimators'])
+
+    #Redefine pipeline with best params
+    pipeline = Pipeline([
+    ('features', FeatureUnion([
+        ('pipe_text',Pipeline([
+            ('vect', CountVectorizer(tokenizer=tokenize)),
+            ('tfidf', TfidfTransformer())            
+        ]))
+    ])),
+    ('clf', MultiOutputClassifier(rfc))]
+    )
+    
     return pipeline
 
 
