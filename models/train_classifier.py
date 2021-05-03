@@ -90,10 +90,15 @@ def build_model():
     ('clf', MultiOutputClassifier(rfc))]
     )
 
+    return pipeline
+
+def improve_model(X_train,y_train,pipeline):
+
     #Define the parameter grid to start GridSearchCV
     parameters = {
     'clf__estimator__n_estimators':[15,20]
     }
+
     #Define GridSearchCV
     cv = GridSearchCV(pipeline,param_grid=parameters)
 
@@ -113,7 +118,7 @@ def build_model():
     ])),
     ('clf', MultiOutputClassifier(rfc))]
     )
-    
+
     return pipeline
 
 
@@ -178,6 +183,9 @@ def main():
         print('Building model...')
         #Buld the model
         model = build_model()
+
+        #Improve the model using GridSearchCV
+        model = improve_model(X_train,y_train,model)
         
         print('Training model...')
         #Train the model
