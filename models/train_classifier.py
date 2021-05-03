@@ -185,7 +185,7 @@ def main():
         model = build_model()
 
         #Improve the model using GridSearchCV
-        model = improve_model(X_train,y_train,model)
+        model = improve_model(X_train,Y_train,model)
         
         print('Training model...')
         #Train the model
