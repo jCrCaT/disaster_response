@@ -43,7 +43,17 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    #Get the column names
+    columns = df.iloc[:,4:].columns
+    #create the dict
+    dict_of_cats = {}
+    #For each column, get the count of tweets
+    for c in columns:
+        dict_of_cats[c] =  df[df[c]==1][c].sum()
     
+    count_categories = pd.DataFrame(list(dict_of_cats.items()),columns=['category','count'])
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -66,13 +76,38 @@ def index():
             }
         }
     ]
-    
+
+    #Create the graph
+    graphs_counts = [
+        {
+            'data': [
+                Bar(
+                    x=count_categories['category'],
+                    y=count_categories['count']
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of categories of messages',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        }
+    ]
+
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+
+    ids_counts = ["graph-{}".format(i) for i, _ in enumerate(graphs_counts)]
+    graphJSON_counts = json.dumps(graphs_counts, cls=plotly.utils.PlotlyJSONEncoder)
     
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON)
+    return render_template('master.html', ids=ids, graphJSON=graphJSON,ids_counts=ids_counts,graphJSON_count=graphJSON_counts)
 
 
 # web page that handles user query and displays model results
