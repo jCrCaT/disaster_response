@@ -97,7 +97,7 @@ def index():
             }
         }
     ]
-    print(graphs)
+    print(graphs_counts)
 
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
