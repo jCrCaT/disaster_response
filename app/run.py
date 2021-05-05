@@ -51,6 +51,9 @@ def index():
     #For each column, get the count of tweets
     for c in columns:
         dict_of_cats[c] =  df[df[c]==1][c].sum()
+
+    print(genre_counts)
+    print(genre_names)
     
     count_categories = pd.DataFrame(list(dict_of_cats.items()),columns=['category','count'])
     # create visuals
@@ -97,7 +100,6 @@ def index():
             }
         }
     ]
-    print(graphs_counts)
 
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
