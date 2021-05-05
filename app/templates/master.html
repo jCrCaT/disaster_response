@@ -75,12 +75,12 @@
         </div>
     {% endblock %}
 
-    {% for id in ids_counts %}
-        <div id_counts="{{id_counts}}"></div>
+    {% for id_c in ids_counts %}
+        <div id="{{id_c}}"></div>
     {% endfor %}
 
     {% for id_c in ids_counts %}
-        <div id_counts="{{id_counts}}"></div>
+        <div id="{{id_c}}"></div>
     {% endfor %}
 </div>
 
@@ -90,9 +90,7 @@
     for(let i in graphs) {
         Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
     }
-</script>
 
-<script type="text/javascript">
     const graphs_counts = {{graphJSON_counts | safe}};
     const ids_counts = {{ids_counts | safe}};
     for(let i in graphs_counts) {
