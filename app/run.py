@@ -52,10 +52,9 @@ def index():
     for c in columns:
         dict_of_cats[c] =  df[df[c]==1][c].sum()
 
-    print(genre_counts)
-    print(genre_names)
     
     count_categories = pd.DataFrame(list(dict_of_cats.items()),columns=['category','count'])
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -76,16 +75,13 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
-    ]
+        },
 
-    #Create the graph
-    graphs_counts = [
         {
             'data': [
                 Bar(
-                    x=count_categories['category'],
-                    y=count_categories['count']
+                    x=list(count_categories['category'])    ,
+                    y=count_categories.groupby('category').sum()['count']
                 )
             ],
 
@@ -99,16 +95,16 @@ def index():
                 }
             }
         }
+
+
     ]
 
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
-    ids_counts = ["graph-{}".format(i) for i, _ in enumerate(graphs_counts)]
-    graphJSON_counts = json.dumps(graphs_counts, cls=plotly.utils.PlotlyJSONEncoder)
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON,ids_counts=ids_counts,graphJSON_count=graphJSON_counts)
+    return render_template('master.html', ids=ids, graphJSON=graphJSON)
 
 
 # web page that handles user query and displays model results

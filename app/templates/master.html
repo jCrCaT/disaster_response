@@ -63,40 +63,14 @@
         <div id="{{id}}"></div>
     {% endfor %}
 
-    {% for id_c in ids_counts %}
-        <div id="{{id_c}}"></div>
-    {% endfor %}
 </div>
 
-<div class="container1">
-    {% block content1 %}
-        <div class="page-header">
-            <h1 class="text-center">Overview of Categories</h1>
-        </div>
-    {% endblock %}
-
-    {% for id_c in ids_counts %}
-        <div id_c="{{id_c}}"></div>
-    {% endfor %}
-
-    {% for id_c in ids_counts %}
-        <div id_c="{{id_c}}"></div>
-    {% endfor %}
-</div>
 
 <script type="text/javascript">
-    const graphs = {{graphJSON | safe}};
+    const graphs = {{ graphJSON | safe}};
     const ids = {{ids | safe}};
     for(let i in graphs) {
         Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
-    }
-</script>
-
-<script type="text/javascript">
-    const graphs_counts = {{ graphJSON_counts | safe}};
-    const ids_counts = {{ids_counts | safe}};
-    for(let i in graphs_counts) {
-        Plotly.plot(ids_counts[i], graphs_counts[i].data, graphs_counts[i].layout);
     }
 </script>
 
