@@ -90,7 +90,9 @@
     for(let i in graphs) {
         Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
     }
+</script>
 
+<script type="text/javascript">
     const graphs_counts = {{graphJSON_counts | safe}};
     const ids_counts = {{ids_counts | safe}};
     for(let i in graphs_counts) {
