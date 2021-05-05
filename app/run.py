@@ -53,7 +53,7 @@ def index():
         dict_of_cats[c] =  df[df[c]==1][c].sum()
     
     count_categories = pd.DataFrame(list(dict_of_cats.items()),columns=['category','count'])
-
+    print(count_categories)
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -105,7 +105,6 @@ def index():
 
     ids_counts = ["graph-{}".format(i) for i, _ in enumerate(graphs_counts)]
     graphJSON_counts = json.dumps(graphs_counts, cls=plotly.utils.PlotlyJSONEncoder)
-    
     # render web page with plotly graphs
     return render_template('master.html', ids=ids, graphJSON=graphJSON,ids_counts=ids_counts,graphJSON_count=graphJSON_counts)
 

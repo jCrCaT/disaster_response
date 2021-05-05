@@ -80,7 +80,7 @@
     const graphs_counts = {{graphJSON_counts | safe}};
     const ids_counts = {{ids_counts | safe}};
     for(let i in graphs_counts) {
-        Plotly.plot(ids[i], graphs_counts[i].data, graphs_counts[i].layout);
+        Plotly.plot(ids_counts[i], graphs_counts[i].data, graphs_counts[i].layout);
     }
 </script>
 
